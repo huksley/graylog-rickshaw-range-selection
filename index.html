@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Rickshaw based range-selection from Graylog-web-interface</title>
+
+<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/rickshaw/1.5.1/rickshaw.css">
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.15/jquery-ui.min.js"></script>
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.10/d3.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/rickshaw/1.5.1/rickshaw.js"></script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js" type="text/javascript"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.4.1/moment-timezone.min.js" type="text/javascript"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/1.5.3/numeral.min.js" type="text/javascript"></script>
+
+
+<link rel="stylesheet" href="graylog/graylog2.css">
+<script src="graylog/moment-helper.js" type="text/javascript"></script>
+<script src="graylog/graphHelper.js" type="text/javascript"></script>
+<script src="graylog/Rickshaw.Graph.Graylog2Selector.js" type="text/javascript"></script>
+<script src="graylog/Rickshaw.Fixtures.Graylog2Time.js" type="text/javascript"></script>
+<script src="graylog/rickshaw-helper.js" type="text/javascript"></script>
+
+</head>
+<body>
+
+<div id="universalsearch">
+	<form method="GET" action="?">
+		<div class="absolute timerange-selector-container">
+			<input class="absolute-from-human" type="hidden">
+			<input class="absolute-to-human" type="hidden">
+		</div>
+	</form>
+</div>	
+
+<div id="result-graph-container">
+	<div id="y_axis"></div>
+    <div id="result-graph" data-from="2015-12-02T07:39:32.696Z" data-to="2015-12-02T15:39:32.696Z"></div>
+    <div id="result-graph-timeline" class="rickshaw_annotation_timeline"></div>
+</div>
+
+
+<script>
+    function isNumber(n) {
+        return !isNaN(parseFloat(n)) && isFinite(n);
+    }
+
+    function activateTimerangeChooser(selectorName, link) {
+        window.console.log(arguments);
+    }
+
+    // http://stackoverflow.com/questions/3179385/val-doesnt-trigger-change-in-jquery
+    (function($) {
+        var originalVal = $.fn.val;
+        $.fn.val = function(){
+            var result =originalVal.apply(this,arguments);
+            if(arguments.length>0)
+                $(this).change();
+            return result;
+        };
+    })(jQuery);
+
+    /**
+     * FIXME: Implement listener for range selection.
+     */
+    $("#universalsearch .absolute .absolute-to-human").change(function (e) {
+        var from = $("#universalsearch .absolute .absolute-from-human");
+        var to = $("#universalsearch .absolute .absolute-to-human");   
+        window.console.log("Selected " + from.val() + " ... " + to.val());
+    });
+
+    resultHistogramData = [
+        {"y":8,"x":1449047280},
+        {"y":74,"x":1449047340},
+        {"y":1,"x":1449049380},
+        {"y":1,"x":1449049440},
+        {"y":1,"x":1449049920},
+        {"y":2,"x":1449050100},
+        {"y":2,"x":1449050220},
+        {"y":2,"x":1449050280},
+        {"y":8,"x":1449050340},
+        {"y":4,"x":1449050400},
+        {"y":4,"x":1449050460},
+        {"y":2,"x":1449050520},
+        {"y":2,"x":1449050580},
+        {"y":4,"x":1449050640},
+        {"y":2,"x":1449050700},
+        {"y":1,"x":1449051240},
+        {"y":4,"x":1449051420},
+        {"y":2,"x":1449051480},
+        {"y":3,"x":1449051600},
+        {"y":2,"x":1449051960},
+        {"y":2,"x":1449052020},
+        {"y":2,"x":1449052080},
+        {"y":11,"x":1449052680},
+        {"y":2,"x":1449052920},
+        {"y":2,"x":1449052980},
+        {"y":2,"x":1449053100},
+        {"y":2,"x":1449053160},
+        {"y":2,"x":1449053220},
+        {"y":3,"x":1449053400},
+        {"y":2,"x":1449053580},
+        {"y":4,"x":1449053880},
+        {"y":1,"x":1449053940},
+        {"y":1,"x":1449054060},
+        {"y":2,"x":1449054120},
+        {"y":1,"x":1449054300},
+        {"y":2,"x":1449054420},
+        {"y":1,"x":1449054660},
+        {"y":5,"x":1449054900},
+        {"y":1,"x":1449055440},
+        {"y":1,"x":1449055500},
+        {"y":3,"x":1449055620},
+        {"y":1,"x":1449055800},
+        {"y":2,"x":1449055920},
+        {"y":2,"x":1449056160},
+        {"y":1,"x":1449056280},
+        {"y":2,"x":1449056340},
+        {"y":1,"x":1449056400},
+        {"y":2,"x":1449056460},
+        {"y":5,"x":1449056580},
+        {"y":1,"x":1449056820},
+        {"y":1,"x":1449056880},
+        {"y":20,"x":1449057060},
+        {"y":2,"x":1449057300},
+        {"y":1,"x":1449057360},
+        {"y":2,"x":1449057420},
+        {"y":2,"x":1449057480},
+        {"y":40,"x":1449057540},
+        {"y":2,"x":1449057780},
+        {"y":01,"x":1449057960},
+        {"y":3,"x":1449058200},
+        {"y":3,"x":1449058260},
+        {"y":01,"x":1449058380},
+        {"y":01,"x":1449058680},
+        {"y":1,"x":1449058860},
+        {"y":1,"x":1449058920},
+        {"y":01,"x":1449059220},
+        {"y":1,"x":1449059460},
+        {"y":1,"x":1449059700},
+        {"y":5,"x":1449060060},
+        {"y":4,"x":1449060120},
+        {"y":10,"x":1449060180},
+        {"y":2,"x":1449060420},
+        {"y":1,"x":1449060540},
+        {"y":2,"x":1449060660},
+        {"y":2,"x":1449060840},
+        {"y":1,"x":1449060960},
+        {"y":2,"x":1449061680},
+        {"y":2,"x":1449061740}
+    ];
+</script>
+<script src="graylog/result-histogram.js" type="text/javascript"></script>
+</body>
+</html>

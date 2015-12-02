@@ -1,0 +1,53 @@
+#universalsearch {
+  display: none;
+}
+
+#result-graph-container {
+  margin-right: 12px;
+}
+
+#result-graph {
+  margin-left: 40px;
+  margin-top: 5px;
+}
+
+#result-graph-timeline {
+  margin-left: 40px;
+}
+
+#y_axis {
+  float: left;
+  height: 200px;
+  width: 40px;
+}
+
+.rickshaw_graph:active,
+.rickshaw_graph:focus,
+.rickshaw_graph *:active,
+.rickshaw_graph *:focus {
+  cursor: crosshair !important;
+}
+.rickshaw_graph .detail .x_label {
+  display: none;
+}
+.rickshaw_graph .detail .item {
+  line-height: 1.4;
+  padding: 0.5em;
+}
+.rickshaw_graph .x_tick {
+  position: relative;
+  top: 38px;
+}
+.rickshaw_graph .detail .date {
+  color: #a0a0a0;
+}
+
+.graph-range-selector {
+  outline: 1px solid #eee;
+  background: rgba(0, 0, 0, 0.3);
+  position: absolute;
+  top: 0;
+  z-index: 1;
+  cursor: pointer;
+  pointer-events: none;
+}
